@@ -1,20 +1,19 @@
-import { fastifyCors } from '@fastify/cors';
-import { fastify } from 'fastify';
+import { fastifyCors } from "@fastify/cors";
+import { fastify } from "fastify";
 import {
   serializerCompiler,
   validatorCompiler,
   type ZodTypeProvider,
-} from 'fastify-type-provider-zod';
+} from "fastify-type-provider-zod";
+import { env } from "./env.ts";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(fastifyCors, {
-  origin: 'http://localhost:5173',
-})
+  origin: "http://localhost:5173",
+});
 
-app.setSerializerCompiler(serializerCompiler)
-app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler);
+app.setValidatorCompiler(validatorCompiler);
 
-app.listen({ port: 3333 }).then(() => {
-  console.log('Server is running on http://localhost:3333')
-})
+app.listen({ port: env.PORT });
