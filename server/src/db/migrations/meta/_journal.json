@@ -8,6 +8,13 @@
       "when": 1752348301613,
       "tag": "0000_optimal_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1753316650653,
+      "tag": "0001_short_zarda",
+      "breakpoints": true
     }
   ]
 }
