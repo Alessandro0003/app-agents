@@ -8,7 +8,9 @@ export const createRoomRoute: FastifyPluginCallbackZod = (app) => {
 
     const { name, description } = request.body as CreateRoomBody;
 
-    if (description === undefined) return
+    if (!name || !description) {
+      return reply.status(400).send({ error: 'Name and description are required.' });
+    }
 
     const result = await db.insert(schema.rooms).values({
       name,
