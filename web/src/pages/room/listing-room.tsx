@@ -1,10 +1,9 @@
-import { ListRoomContaiers } from "@/modules/room/containers/list-room-containers"
+import { ListRoomContaiers } from "@/modules/room/containers/list-room-containers";
 
 export const Room = () => {
-  return (
-    <div>
-      Room details
-      <ListRoomContaiers />
-    </div>
-  )
-}
+	return (
+		<div className="min-h-screen p-4">
+			<ListRoomContaiers />
+		</div>
+	);
+};
