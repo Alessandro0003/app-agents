@@ -2,6 +2,7 @@ import type { FastifyPluginAsync } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import * as controllers from "../../../controllers/index.ts";
 import {
+	createQuestionsSchema,
 	createRoomSchema,
 	getRoomQuestionSchema,
 	getRoomsSchema,
@@ -19,7 +20,7 @@ export const roomsRoute: FastifyPluginAsync = async (app) => {
 	route.post("/rooms", { schema: createRoomSchema }, controllers.createRoom);
 	route.post(
 		"/rooms/:roomId/questions",
-		{ schema: createRoomSchema },
+		{ schema: createQuestionsSchema },
 		controllers.createRoomQuestion,
 	);
 };
