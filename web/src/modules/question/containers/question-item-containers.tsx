@@ -8,9 +8,6 @@ interface QuestionItemContainersProps {
 export const QuestionItemContainers = (props: QuestionItemContainersProps) => {
 	const { question } = props;
 
-	// !TODO - Implement the logic to fetch the question data
-	// const { data: question } = useGetQuestion({})
-
 	return (
 		<div>
 			<QuestionItem question={question} />
