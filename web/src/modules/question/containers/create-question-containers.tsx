@@ -1,3 +1,4 @@
+import { useCreateRoomQuestion } from "@/modules/room/hooks/mutation";
 import type { Room } from "@/modules/room/schemas";
 import { QuestionForm, useQuestionForm } from "../components/form";
 import type { QuestionFormOutput } from "../components/form/types";
@@ -17,8 +18,15 @@ export const CreateQuestionContainers = (
 		},
 	});
 
+	const { mutate: createQuestion } = useCreateRoomQuestion({
+		onSuccess: () => form.reset(),
+	});
+
 	const handleSubmit = (data: QuestionFormOutput) =>
-		console.log(data, "Room ID:", roomId);
+		createQuestion({
+			roomId,
+			question: data.question,
+		});
 
 	return (
 		<div>
