@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { questionFormSchema } from './schema'
+import type { z } from "zod";
+import type { Schema } from "./schema";
 
-export type QuestionFormInput = z.input<typeof questionFormSchema>
-export type QuestionFormOutput = z.output<typeof questionFormSchema>
+export type QuestionFormInput = z.input<typeof Schema>;
+export type QuestionFormOutput = z.output<typeof Schema>;
