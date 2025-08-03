@@ -1,6 +1,11 @@
 import { api } from "@/services";
 
-import type { CreateRoom, GetRoom, GetRoomQuestions } from "./types";
+import type {
+	CreateRoom,
+	CreateRoomQuestion,
+	GetRoom,
+	GetRoomQuestions,
+} from "./types";
 
 export const getRoom = async (): Promise<GetRoom.Response> => {
 	return await api.get("/rooms").then((res) => res.data.data);
@@ -24,4 +29,14 @@ export const getRoomQuestions = async (
 	return await api
 		.get(`/rooms/${roomId}/questions`)
 		.then((res) => res.data.data);
+};
+
+export const createRoomQuestion = async (
+	args: CreateRoomQuestion.Args,
+): Promise<CreateRoomQuestion.Response> => {
+	const { roomId, ...data } = args;
+
+	const result = await api.post(`/rooms/${roomId}/questions`, data);
+
+	return result.data.data;
 };

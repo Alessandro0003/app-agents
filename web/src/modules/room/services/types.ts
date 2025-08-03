@@ -30,3 +30,14 @@ export namespace GetRoomQuestions {
 		createdAt: Question["createdAt"];
 	}[];
 }
+
+export namespace CreateRoomQuestion {
+	export type Args = {
+		roomId: Room["id"];
+		question: Question["question"];
+	};
+
+	export type Response = {
+		questionId: Question["id"];
+	};
+}

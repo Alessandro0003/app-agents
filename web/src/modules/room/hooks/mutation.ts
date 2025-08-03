@@ -1,5 +1,5 @@
 import { createMutation } from "@/hooks/mutations";
-import { createRoom } from "../services";
+import { createRoom, createRoomQuestion } from "../services";
 
 export const useCreateRoom = createMutation({
 	key: ["createRoom"],
@@ -10,4 +10,15 @@ export const useCreateRoom = createMutation({
 		onSuccess: () => "Sala criada com sucesso",
 	},
 	invalidate: [{ queryKey: ["getRoom"] }],
+});
+
+export const useCreateRoomQuestion = createMutation({
+	key: ["createRoomQuestion"],
+	mutationFn: createRoomQuestion,
+	messages: {
+		onError: () => "Erro ao criar pergunta",
+		onMutate: () => "Criando pergunta...",
+		onSuccess: () => "Pergunta criada com sucesso",
+	},
+	invalidate: [{ queryKey: ["getRoomQuestions"] }],
 });
