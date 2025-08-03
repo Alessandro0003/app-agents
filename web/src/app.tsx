@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CreateRoom } from "./pages/room/create-room";
-import { Room } from "./pages/room/listing-room";
+import { Room } from "./pages/room/room";
 
 export function App() {
 	const queryClient = new QueryClient();
