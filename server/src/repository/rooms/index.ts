@@ -2,7 +2,6 @@ import { count, desc, eq } from "drizzle-orm";
 import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
 import type {
-	AudioChunks,
 	CreateRoom,
 	CreateRoomQuestion,
 	GetRoomQuestion,
@@ -63,21 +62,6 @@ export const createQuestion = async (args: CreateRoomQuestion.Args) => {
 		.values({
 			question,
 			roomId,
-		})
-		.returning();
-
-	return result;
-};
-
-export const audioChunk = async (args: AudioChunks.Args) => {
-	const { roomId, embeddings, transcription } = args;
-
-	const result = await db
-		.insert(schema.audioChunks)
-		.values({
-			roomId,
-			transcription,
-			embeddings,
 		})
 		.returning();
 
