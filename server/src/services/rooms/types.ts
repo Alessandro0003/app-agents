@@ -17,3 +17,11 @@ export namespace CreateRoomQuestion {
 		question: string;
 	};
 }
+
+export namespace AudioChunks {
+	export type Args = {
+		roomId: string;
+		transcription: string;
+		embeddings: number[];
+	};
+}

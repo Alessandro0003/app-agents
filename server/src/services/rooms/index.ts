@@ -1,5 +1,6 @@
 import * as repository from "../../repository/rooms/index.ts";
 import type {
+	AudioChunks,
 	CreateRoom,
 	CreateRoomQuestion,
 	GetRoomQuestion,
@@ -48,5 +49,25 @@ export const createRoomQuestion = async (args: CreateRoomQuestion.Args) => {
 
 	return {
 		questionId: insertedQuestion.id,
+	};
+};
+
+export const audioChunks = async (args: AudioChunks.Args) => {
+	const { roomId, embeddings, transcription } = args;
+
+	const result = await repository.audioChunk({
+		roomId,
+		transcription,
+		embeddings,
+	});
+
+	const chunk = result[0];
+
+	if (!chunk) {
+		throw new Error("Failed to save audio chunk");
+	}
+
+	return {
+		chunkId: chunk.id,
 	};
 };
