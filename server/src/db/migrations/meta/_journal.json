@@ -15,6 +15,13 @@
       "when": 1753316650653,
       "tag": "0001_short_zarda",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1754257308234,
+      "tag": "0002_dark_wallflower",
+      "breakpoints": true
     }
   ]
 }
