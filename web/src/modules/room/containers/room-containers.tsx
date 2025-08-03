@@ -2,7 +2,7 @@ import { ArrowLeft, Radio } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CreateQuestionContainers } from "@/modules/question/containers/create-question-containers";
-import { QuestionItemContainers } from "@/modules/question/containers/question-item-containers";
+import { QuestionListContainers } from "@/modules/question/containers/question-list";
 import type { Room } from "../schemas";
 
 interface RoomContainersProps {
@@ -36,34 +36,10 @@ export const RoomContainers = (props: RoomContainersProps) => {
 					Faça perguntas e receba respostas com IA
 				</p>
 			</div>
-
 			<div className="mb-8">
 				<CreateQuestionContainers roomId={roomId} />
 			</div>
-
-			<div className="space-y-6">
-				<div className="flex items-center justify-between">
-					<h2 className="font-semibold text-2xl text-foreground">
-						Perguntas & Respostas
-					</h2>
-				</div>
-
-				<QuestionItemContainers
-					question={{
-						id: "1",
-						question: "Pergunta 1",
-						createdAt: new Date().toISOString(),
-					}}
-				/>
-				<QuestionItemContainers
-					question={{
-						id: "2",
-						question: "Pergunta 2",
-						answer: "Resposta 2",
-						createdAt: new Date().toISOString(),
-					}}
-				/>
-			</div>
+			<QuestionListContainers roomId={roomId} />
 		</>
 	);
 };
