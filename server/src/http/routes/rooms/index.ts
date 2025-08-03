@@ -6,21 +6,31 @@ import {
 	createRoomSchema,
 	getRoomQuestionSchema,
 	getRoomsSchema,
+	uploadAudioSchema,
 } from "../../../controllers/schema.ts";
 
 export const roomsRoute: FastifyPluginAsync = async (app) => {
 	const route = app.withTypeProvider<ZodTypeProvider>();
 
 	route.get("/rooms", { schema: getRoomsSchema }, controllers.getRooms);
+
 	route.get(
 		"/rooms/:roomId/questions",
 		{ schema: getRoomQuestionSchema },
 		controllers.getRoomQuestion,
 	);
+
 	route.post("/rooms", { schema: createRoomSchema }, controllers.createRoom);
+
 	route.post(
 		"/rooms/:roomId/questions",
 		{ schema: createQuestionsSchema },
 		controllers.createRoomQuestion,
+	);
+
+	route.post(
+		"/rooms/:roomId/audio",
+		{ schema: uploadAudioSchema },
+		controllers.uploadAudio,
 	);
 };
