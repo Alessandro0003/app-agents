@@ -1,3 +1,4 @@
+import type { Question } from "@/modules/question/schemas";
 import type { Room } from "../schemas";
 
 export namespace GetRoom {
@@ -15,4 +16,17 @@ export namespace CreateRoom {
 	export type Response = {
 		roomId: Room["id"];
 	};
+}
+
+export namespace GetRoomQuestions {
+	export type Args = {
+		roomId: Question["roomId"];
+	};
+
+	export type Response = {
+		id: Question["id"];
+		question: Question["question"];
+		answer?: Question["answer"];
+		createdAt: Question["createdAt"];
+	}[];
 }
