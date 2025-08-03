@@ -1,6 +1,7 @@
 import { api } from "@/services";
 
 import type {
+	AudioUpload,
 	CreateRoom,
 	CreateRoomQuestion,
 	GetRoom,
@@ -39,4 +40,21 @@ export const createRoomQuestion = async (
 	const result = await api.post(`/rooms/${roomId}/questions`, data);
 
 	return result.data.data;
+};
+
+export const audioUpload = async (
+	args: AudioUpload.Args,
+): Promise<AudioUpload.Response> => {
+	const { roomId, audio } = args;
+
+	const formData = new FormData();
+	formData.append("file", audio, "audio.webm");
+
+	const response = await api.post(`/rooms/${roomId}/audio`, formData, {
+		headers: {
+			"Content-Type": "multipart/form-data",
+		},
+	});
+
+	return response.data.data;
 };

@@ -41,3 +41,12 @@ export namespace CreateRoomQuestion {
 		questionId: Question["id"];
 	};
 }
+
+export namespace AudioUpload {
+	export type Args = {
+		roomId: Room["id"];
+		audio: Blob;
+	};
+
+	export type Response = {};
+}
