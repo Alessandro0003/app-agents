@@ -18,3 +18,7 @@ export type CreateRoomQuestionRequest = FastifyRequest<{
 	Params: z.infer<typeof schemas.createQuestionsSchema>["params"];
 	Body: z.infer<typeof schemas.createQuestionsSchema>["body"];
 }>;
+
+export type UploadAudioRequest = FastifyRequest<{
+	Params: z.infer<typeof schemas.uploadAudioSchema>["params"];
+}>;

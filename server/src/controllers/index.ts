@@ -1,10 +1,12 @@
 import type { FastifyReply } from "fastify";
+import { generateEmbeddings, transcribeAudio } from "../I.A/gemini.ts";
 import * as services from "../services/rooms/index.ts";
 import type {
 	CreateRoomQuestionRequest,
 	CreateRoomRequest,
 	GetRoomQuestionRequest,
 	GetRoomsRequest,
+	UploadAudioRequest,
 } from "./types.ts";
 
 export const getRooms = async (
@@ -64,4 +66,51 @@ export const createRoomQuestion = async (
 		message: "Question created successfully",
 		data: result,
 	});
+};
+
+export const uploadAudio = async (
+	request: UploadAudioRequest,
+	reply: FastifyReply,
+) => {
+	try {
+		const { roomId } = request.params;
+		const audio = await request.file();
+
+		if (!audio) {
+			throw new Error("Audio file is required");
+		}
+
+		const audioBuffer = await audio.toBuffer();
+		const audioAsBase64 = audioBuffer.toString("base64");
+
+		// Transcrever o audio
+		const transcription = await transcribeAudio(audioAsBase64, audio.mimetype);
+
+		// Gerar o vetor semântico / embeddings
+		const embeddings = await generateEmbeddings(transcription);
+
+		// Armazena os vetores no banco de dados
+		const chunk = await services.audioChunks({
+			roomId,
+			transcription,
+			embeddings,
+		});
+
+		return reply.status(201).send({
+			statusCode: 201,
+			message: "Audio uploaded and transcribed successfully",
+			data: chunk,
+		});
+	} catch (error) {
+		let message: string = "Error processing audio upload";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
+	}
 };

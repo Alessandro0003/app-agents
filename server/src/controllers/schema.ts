@@ -23,3 +23,9 @@ export const createQuestionsSchema = z.object({
 		question: z.string().min(1, "Question is required"),
 	}),
 });
+
+export const uploadAudioSchema = z.object({
+	params: z.object({
+		roomId: z.string().uuid(),
+	}),
+});
