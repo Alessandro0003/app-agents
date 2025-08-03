@@ -1,11 +1,11 @@
 import { fastifyCors } from "@fastify/cors";
+import { fastifyMultipart } from "@fastify/multipart";
 import { fastify } from "fastify";
 import {
 	serializerCompiler,
 	validatorCompiler,
 	type ZodTypeProvider,
 } from "fastify-type-provider-zod";
-
 import { env } from "./env.ts";
 import { roomsRoute } from "./http/routes/rooms/index.ts";
 
@@ -26,6 +26,9 @@ app.setErrorHandler((error, _, reply) => {
 });
 
 app.get("/health", () => "OK");
+
+// Registro do plugin de multipart para upload de arquivos
+app.register(fastifyMultipart);
 
 // Rotas agrupadas
 app.register(roomsRoute);
