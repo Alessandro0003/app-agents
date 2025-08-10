@@ -1,6 +1,6 @@
 export namespace CreateAudioChunks {
 	export type Args = {
-		roomId: string;
+		// roomId: string;
 		transcription: string;
 		embeddings: number[];
 	};
@@ -8,7 +8,6 @@ export namespace CreateAudioChunks {
 
 export namespace GetAudioChunck {
 	export type Args = {
-		roomId: string;
 		embeddings: number[];
 	};
 

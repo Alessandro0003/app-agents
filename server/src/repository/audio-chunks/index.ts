@@ -4,12 +4,11 @@ import { schema } from "../../db/schemas/index.ts";
 import type { CreateAudioChunks, GetAudioChunks } from "./types.ts";
 
 export const createAudioChunks = async (args: CreateAudioChunks.Args) => {
-	const { roomId, embeddings, transcription } = args;
+	const { embeddings, transcription } = args;
 
 	const result = await db
 		.insert(schema.audioChunks)
 		.values({
-			roomId,
 			transcription,
 			embeddings,
 		})
@@ -19,7 +18,7 @@ export const createAudioChunks = async (args: CreateAudioChunks.Args) => {
 };
 
 export const getAudioChunks = async (args: GetAudioChunks.Args) => {
-	const { roomId, embeddings } = args;
+	const { embeddings } = args;
 
 	const embeddingsAsString = `[${embeddings.join(", ")}]`;
 
@@ -32,7 +31,7 @@ export const getAudioChunks = async (args: GetAudioChunks.Args) => {
 		.from(schema.audioChunks)
 		.where(
 			and(
-				eq(schema.audioChunks.roomId, roomId),
+				eq(schema.audioChunks.id, schema.audioChunks.id),
 				sql`1 - (${schema.audioChunks.embeddings} <=> ${embeddingsAsString}::vector) > 0.7`,
 			),
 		)

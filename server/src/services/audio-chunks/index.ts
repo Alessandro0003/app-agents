@@ -2,10 +2,9 @@ import * as repository from "../../repository/audio-chunks/index.ts";
 import type { CreateAudioChunks, GetAudioChunck } from "./types.ts";
 
 export const createAudioChunks = async (args: CreateAudioChunks.Args) => {
-	const { roomId, embeddings, transcription } = args;
+	const { embeddings, transcription } = args;
 
 	const result = await repository.createAudioChunks({
-		roomId,
 		transcription,
 		embeddings,
 	});
@@ -22,9 +21,9 @@ export const createAudioChunks = async (args: CreateAudioChunks.Args) => {
 };
 
 export const getAudioChunks = async (args: GetAudioChunck.Args) => {
-	const { roomId, embeddings } = args;
+	const { embeddings } = args;
 
-	const chunks = await repository.getAudioChunks({ roomId, embeddings });
+	const chunks = await repository.getAudioChunks({ embeddings });
 
 	return chunks;
 };

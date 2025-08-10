@@ -67,7 +67,6 @@ export const createRoomQuestion = async (
 	const embeddings = await generateEmbeddings(question);
 
 	const chunks = await audioChunksServices.getAudioChunks({
-		roomId,
 		embeddings,
 	});
 
@@ -97,7 +96,6 @@ export const uploadAudio = async (
 	reply: FastifyReply,
 ) => {
 	try {
-		const { roomId } = request.params;
 		const audio = await request.file();
 
 		if (!audio) {
@@ -115,7 +113,6 @@ export const uploadAudio = async (
 
 		// Armazena os vetores no banco de dados
 		const chunk = await audioChunksServices.createAudioChunks({
-			roomId,
 			transcription,
 			embeddings,
 		});

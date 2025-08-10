@@ -25,7 +25,5 @@ export const createQuestionsSchema = z.object({
 });
 
 export const uploadAudioSchema = z.object({
-	params: z.object({
-		roomId: z.string().uuid(),
-	}),
+	params: z.object({}),
 });

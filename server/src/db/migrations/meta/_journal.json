@@ -22,6 +22,13 @@
       "when": 1754257308234,
       "tag": "0002_dark_wallflower",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1754858618685,
+      "tag": "0003_parched_ender_wiggin",
+      "breakpoints": true
     }
   ]
 }
