@@ -13,6 +13,7 @@ const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(fastifyCors, {
 	origin: env.ALLOWED_ORIGINS,
+	methods: "*",
 });
 
 app.setSerializerCompiler(serializerCompiler);

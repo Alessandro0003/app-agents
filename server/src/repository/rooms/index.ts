@@ -4,6 +4,8 @@ import { schema } from "../../db/schemas/index.ts";
 import type {
 	CreateRoom,
 	CreateRoomQuestion,
+	DeleteRoom,
+	GetByQuestionId,
 	GetRoomQuestion,
 } from "./types.ts";
 
@@ -61,9 +63,40 @@ export const createQuestion = async (args: CreateRoomQuestion.Args) => {
 		.insert(schema.questions)
 		.values({
 			question,
-		roomId,
+			roomId,
 			answer,
 		})
+		.returning();
+
+	return result;
+};
+
+export const getQuestionById = async (
+	args: GetByQuestionId.Args,
+): Promise<GetByQuestionId.Response> => {
+	const { id } = args;
+
+	const result = await db
+		.select({
+			id: schema.questions.id,
+		})
+		.from(schema.questions)
+		.where(eq(schema.questions.id, id))
+		.limit(1);
+
+	const question = result[0];
+
+	return {
+		id: question.id,
+	};
+};
+
+export const deleteQuestion = async (args: DeleteRoom.Args) => {
+	const { id } = args;
+
+	const result = await db
+		.delete(schema.questions)
+		.where(eq(schema.questions.id, id))
 		.returning();
 
 	return result;

@@ -9,6 +9,7 @@ import * as services from "../services/rooms/index.ts";
 import type {
 	CreateRoomQuestionRequest,
 	CreateRoomRequest,
+	DeleteQuestionRequest,
 	GetRoomQuestionRequest,
 	GetRoomsRequest,
 	UploadAudioRequest,
@@ -124,6 +125,33 @@ export const uploadAudio = async (
 		});
 	} catch (error) {
 		let message: string = "Error processing audio upload";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
+	}
+};
+
+export const deleteQuestion = async (
+	request: DeleteQuestionRequest,
+	reply: FastifyReply,
+) => {
+	try {
+		const { questionId } = request.params;
+
+		await services.deleteQuestion({ questionId });
+
+		return reply.status(200).send({
+			statusCode: 200,
+			message: "Question deleted successfully",
+		});
+	} catch (error) {
+		let message: string = "Error deleting question";
 
 		if (error instanceof Error) {
 			message = error.message;

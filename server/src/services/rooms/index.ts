@@ -2,6 +2,7 @@ import * as repository from "../../repository/rooms/index.ts";
 import type {
 	CreateRoom,
 	CreateRoomQuestion,
+	DeleteQuestion,
 	GetRoomQuestion,
 } from "./types.ts";
 
@@ -50,4 +51,16 @@ export const createRoomQuestion = async (args: CreateRoomQuestion.Args) => {
 		questionId: insertedQuestion.id,
 		answer,
 	};
+};
+
+export const deleteQuestion = async (args: DeleteQuestion.Args) => {
+	const { questionId } = args;
+
+	const question = await repository.deleteQuestion({ id: questionId });
+
+	if (question.length === 0) {
+		throw new Error("Question not exists");
+	}
+
+	return question;
 };

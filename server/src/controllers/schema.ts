@@ -27,3 +27,9 @@ export const createQuestionsSchema = z.object({
 export const uploadAudioSchema = z.object({
 	params: z.object({}),
 });
+
+export const deleteQuestionSchema = z.object({
+	params: z.object({
+		questionId: z.string().uuid(),
+	}),
+});

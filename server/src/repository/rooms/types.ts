@@ -26,3 +26,19 @@ export namespace AudioChunks {
 		embeddings: number[];
 	};
 }
+
+export namespace GetByQuestionId {
+	export type Args = {
+		id: string;
+	};
+
+	export type Response = {
+		id: string;
+	};
+}
+
+export namespace DeleteRoom {
+	export type Args = {
+		id: string;
+	};
+}

@@ -18,3 +18,9 @@ export namespace CreateRoomQuestion {
 		answer?: string;
 	};
 }
+
+export namespace DeleteQuestion {
+	export type Args = {
+		questionId: string;
+	};
+}

@@ -4,6 +4,7 @@ import * as controllers from "../../../controllers/index.ts";
 import {
 	createQuestionsSchema,
 	createRoomSchema,
+	deleteQuestionSchema,
 	getRoomQuestionSchema,
 	getRoomsSchema,
 	uploadAudioSchema,
@@ -32,5 +33,11 @@ export const roomsRoute: FastifyPluginAsync = async (app) => {
 		"/rooms/:roomId/audio",
 		{ schema: uploadAudioSchema },
 		controllers.uploadAudio,
+	);
+
+	route.delete(
+		"/rooms/questions/:questionId",
+		{ schema: deleteQuestionSchema },
+		controllers.deleteQuestion,
 	);
 };
