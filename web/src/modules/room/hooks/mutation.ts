@@ -9,7 +9,7 @@ export const useCreateRoom = createMutation({
 		onMutate: () => "Criando sala...",
 		onSuccess: () => "Sala criada com sucesso",
 	},
-	invalidate: [{ queryKey: ["getRoom"] }],
+	invalidate: [{ queryKey: ["get-room"] }],
 });
 
 export const useCreateRoomQuestion = createMutation({
@@ -20,7 +20,7 @@ export const useCreateRoomQuestion = createMutation({
 		onMutate: () => "Criando pergunta...",
 		onSuccess: () => "Pergunta criada com sucesso",
 	},
-	invalidate: [{ queryKey: ["getRoomQuestions"] }],
+	invalidate: [{ queryKey: ["get-questions"] }],
 });
 
 export const useAudioUpload = createMutation({
@@ -31,5 +31,5 @@ export const useAudioUpload = createMutation({
 		onMutate: () => "Enviando áudio...",
 		onSuccess: () => "Áudio enviado com sucesso",
 	},
-	invalidate: [{ queryKey: ["getRoom"] }],
+	invalidate: [{ queryKey: ["get-room"] }],
 });

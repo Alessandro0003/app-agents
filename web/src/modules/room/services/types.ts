@@ -38,7 +38,10 @@ export namespace CreateRoomQuestion {
 	};
 
 	export type Response = {
+		id: Question["id"];
 		questionId: Question["id"];
+		answer?: Question["answer"];
+		createdAt: Question["createdAt"];
 	};
 }
 

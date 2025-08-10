@@ -2,11 +2,11 @@ import { createQuery } from "@/hooks/queries";
 import { getRoom, getRoomQuestions } from "../services";
 
 export const useGetRoom = createQuery({
-	queryKey: ["getRoom"],
+	queryKey: ["get-room"],
 	queryFn: getRoom,
 });
 
 export const useGetRoomQuestions = createQuery({
-	queryKey: ["getRoomQuestions"],
+	queryKey: ["get-questions"],
 	queryFn: getRoomQuestions,
 });

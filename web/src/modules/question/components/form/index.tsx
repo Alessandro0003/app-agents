@@ -35,10 +35,11 @@ export interface QuestionFormProps
 	// biome-ignore lint/suspicious/noExplicitAny: use any type for the output
 	extends UseFormReturn<QuestionFormInput, any, QuestionFormOutput> {
 	onSubmit: (data: QuestionFormOutput) => void;
+	isSubmitting?: boolean;
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
-	const { onSubmit, ...form } = props;
+	const { onSubmit, isSubmitting, ...form } = props;
 
 	return (
 		<Card>
@@ -63,6 +64,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
 									<FormControl>
 										<Textarea
 											className="min-h-[100px]"
+											disabled={isSubmitting}
 											placeholder="O que você gostaria de saber?"
 											{...field}
 										/>
@@ -72,7 +74,9 @@ export const QuestionForm = (props: QuestionFormProps) => {
 							)}
 						/>
 
-						<Button type="submit">Enviar pergunta</Button>
+						<Button disabled={isSubmitting} type="submit">
+							Enviar pergunta
+						</Button>
 					</form>
 				</Form>
 			</CardContent>

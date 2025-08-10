@@ -10,6 +10,7 @@ export const questionSchema = z.object({
 		.max(500, "Pergunta deve ter no máximo 500 caracteres"),
 	answer: z.string().optional(),
 	createdAt: z.string(),
+	isGeneratingAnswer: z.boolean().optional(),
 });
 
 export type Question = z.infer<typeof questionSchema>;
