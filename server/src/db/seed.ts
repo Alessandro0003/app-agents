@@ -1,9 +1,12 @@
 import { reset, seed } from "drizzle-seed";
 import { db, sql } from "./connection.ts";
-import { schema } from "./schemas/index.ts";
+import { schema } from "./schemas/index.ts"; // importe apenas as tabelas necessárias
 
-await reset(db, schema);
-await seed(db, schema).refine((f) => {
+const { rooms, questions } = schema;
+
+await reset(db, { rooms, questions });
+
+await seed(db, { rooms, questions }).refine((f) => {
 	return {
 		rooms: {
 			count: 5,
@@ -20,5 +23,4 @@ await seed(db, schema).refine((f) => {
 
 await sql.end();
 
-// biome-ignore lint/suspicious/noConsole: only used in dev
 console.log("Database seeded successfully.");

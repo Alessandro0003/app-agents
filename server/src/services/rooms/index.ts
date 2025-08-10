@@ -40,13 +40,14 @@ export const getRoomQuestion = async (args: GetRoomQuestion.Args) => {
 };
 
 export const createRoomQuestion = async (args: CreateRoomQuestion.Args) => {
-	const { roomId, question } = args;
+	const { roomId, question, answer } = args;
 
-	const result = await repository.createQuestion({ roomId, question });
+	const result = await repository.createQuestion({ roomId, question, answer });
 
 	const insertedQuestion = result[0];
 
 	return {
 		questionId: insertedQuestion.id,
+		answer,
 	};
 };

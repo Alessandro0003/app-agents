@@ -55,13 +55,14 @@ export const getRoomQuestion = async (args: GetRoomQuestion.Args) => {
 };
 
 export const createQuestion = async (args: CreateRoomQuestion.Args) => {
-	const { roomId, question } = args;
+	const { roomId, question, answer } = args;
 
 	const result = await db
 		.insert(schema.questions)
 		.values({
 			question,
-			roomId,
+		roomId,
+			answer,
 		})
 		.returning();
 

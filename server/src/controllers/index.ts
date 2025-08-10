@@ -1,5 +1,10 @@
 import type { FastifyReply } from "fastify";
-import { generateEmbeddings, transcribeAudio } from "../I.A/gemini.ts";
+import {
+	generateAnswer,
+	generateEmbeddings,
+	transcribeAudio,
+} from "../I.A/gemini.ts";
+import * as audioChunksServices from "../services/audio-chunks/index.ts";
 import * as services from "../services/rooms/index.ts";
 import type {
 	CreateRoomQuestionRequest,
@@ -59,7 +64,26 @@ export const createRoomQuestion = async (
 	const { roomId } = request.params;
 	const { question } = request.body;
 
-	const result = await services.createRoomQuestion({ roomId, question });
+	const embeddings = await generateEmbeddings(question);
+
+	const chunks = await audioChunksServices.getAudioChunks({
+		roomId,
+		embeddings,
+	});
+
+	let answer: string | undefined;
+
+	if (chunks.length > 0) {
+		const transcriptions = chunks.map((chunk) => chunk.transcription);
+
+		answer = await generateAnswer(question, transcriptions);
+	}
+
+	const result = await services.createRoomQuestion({
+		roomId,
+		question,
+		answer,
+	});
 
 	return reply.status(201).send({
 		statusCode: 201,
@@ -90,7 +114,7 @@ export const uploadAudio = async (
 		const embeddings = await generateEmbeddings(transcription);
 
 		// Armazena os vetores no banco de dados
-		const chunk = await services.audioChunks({
+		const chunk = await audioChunksServices.createAudioChunks({
 			roomId,
 			transcription,
 			embeddings,

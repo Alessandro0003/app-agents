@@ -15,6 +15,7 @@ export namespace CreateRoomQuestion {
 	export type Args = {
 		roomId: string;
 		question: string;
+		answer?: string;
 	};
 }
 

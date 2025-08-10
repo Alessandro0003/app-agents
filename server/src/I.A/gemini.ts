@@ -7,6 +7,7 @@ const gemini = new GoogleGenAI({
 
 const model = "gemini-2.5-flash";
 
+// Transcribe audio to text using Gemini AI
 export const transcribeAudio = async (
 	audioAsBase64: string,
 	mimeType: string,
@@ -33,6 +34,7 @@ export const transcribeAudio = async (
 	return response.text;
 };
 
+// Generate embeddings for the given text using Gemini AI
 export const generateEmbeddings = async (text: string) => {
 	const response = await gemini.models.embedContent({
 		model: "text-embedding-004",
@@ -47,4 +49,42 @@ export const generateEmbeddings = async (text: string) => {
 	}
 
 	return response.embeddings[0].values;
+};
+
+export const generateAnswer = async (
+	question: string,
+	transcriptions: string[],
+) => {
+	const context = transcriptions.join("\n\n");
+	const prompt = `
+		Com base no texto fornecido abaixo como contexto, responda a pergunta de forma clara e precisa em português do Brasil;
+
+		CONTEXTO:
+		${context}
+
+		PERGUNTA:
+		${question}
+
+		INSTRUÇÕES:
+		- Use apenas informações contidas no contexto enviado;
+		- Se a resposta não encontrada no contexto, responda que não possui informações suficientes para responder;
+		- Seja objetivo e claro na resposta;
+		- Mantenha um tom educativo e amigável;
+		- Cite trechos relevantes do contexto se apropriado;
+		- Se for citar o contexto, utilize o termo "De acordo com as informações que eu tenho";
+	`.trim();
+	const response = await gemini.models.generateContent({
+		model,
+		contents: [
+			{
+				text: prompt,
+			},
+		],
+	});
+
+	if (!response.text) {
+		throw new Error("Erro ao gerar a resposta pelo Gemini");
+	}
+
+	return response.text;
 };
