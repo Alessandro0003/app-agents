@@ -22,9 +22,12 @@ export const QuestionItem = (props: QuestionItemProps) => {
 								<MessageSquare className="size-4 text-primary" />
 							</div>
 						</div>
+
 						<div className="flex-1">
-							<div className="flex justify-end mb-1">{renderTrigger()}</div>
-							<p className="mb-1 font-medium text-foreground">Pergunta</p>
+							<div className="mb-1 flex items-center justify-between">
+								<p className="font-medium text-foreground">Pergunta</p>
+								{renderTrigger()}
+							</div>
 							<p className="whitespace-pre-line text-muted-foreground text-sm leading-relaxed">
 								{question.question}
 							</p>
