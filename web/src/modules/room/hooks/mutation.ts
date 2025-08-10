@@ -1,5 +1,10 @@
 import { createMutation } from "@/hooks/mutations";
-import { audioUpload, createRoom, createRoomQuestion } from "../services";
+import {
+	audioUpload,
+	createRoom,
+	createRoomQuestion,
+	deleteQuestion,
+} from "../services";
 
 export const useCreateRoom = createMutation({
 	key: ["createRoom"],
@@ -32,4 +37,15 @@ export const useAudioUpload = createMutation({
 		onSuccess: () => "Áudio enviado com sucesso",
 	},
 	invalidate: [{ queryKey: ["get-room"] }],
+});
+
+export const useDeleteQuestion = createMutation({
+	key: ["delete-question"],
+	mutationFn: deleteQuestion,
+	messages: {
+		onError: () => "Erro ao excluir pergunta",
+		onMutate: () => "Excluindo pergunta...",
+		onSuccess: () => "Pergunta excluída com sucesso",
+	},
+	invalidate: [{ queryKey: ["get-questions"] }],
 });

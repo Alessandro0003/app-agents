@@ -1,14 +1,16 @@
 import { Bot, Loader2, MessageSquare } from "lucide-react";
+import type { JSX } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { dayjs } from "@/lib/dayjs";
 import type { Question } from "../../schemas";
 
 interface QuestionItemProps {
 	question: Question;
+	renderTrigger: () => JSX.Element;
 }
 
 export const QuestionItem = (props: QuestionItemProps) => {
-	const { question } = props;
+	const { question, renderTrigger } = props;
 	return (
 		<Card>
 			<CardContent>
@@ -21,6 +23,7 @@ export const QuestionItem = (props: QuestionItemProps) => {
 							</div>
 						</div>
 						<div className="flex-1">
+							<div className="flex justify-end mb-1">{renderTrigger()}</div>
 							<p className="mb-1 font-medium text-foreground">Pergunta</p>
 							<p className="whitespace-pre-line text-muted-foreground text-sm leading-relaxed">
 								{question.question}

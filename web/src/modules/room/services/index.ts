@@ -4,6 +4,7 @@ import type {
 	AudioUpload,
 	CreateRoom,
 	CreateRoomQuestion,
+	DeleteQuestion,
 	GetRoom,
 	GetRoomQuestions,
 } from "./types";
@@ -57,4 +58,11 @@ export const audioUpload = async (
 	});
 
 	return response.data.data;
+};
+
+export const deleteQuestion = async (args: DeleteQuestion.Args) => {
+	const { questionId } = args;
+	return await api
+		.delete(`/rooms/questions/${questionId}`)
+		.then((res) => res.data.data);
 };

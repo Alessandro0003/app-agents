@@ -53,3 +53,9 @@ export namespace AudioUpload {
 
 	export type Response = {};
 }
+
+export namespace DeleteQuestion {
+	export type Args = {
+		questionId: Question["id"];
+	};
+}
