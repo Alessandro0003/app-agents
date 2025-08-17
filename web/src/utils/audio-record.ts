@@ -32,3 +32,14 @@ export async function createRecorder(
 
 	return recorder;
 }
+
+export function releaseMic(rec?: MediaRecorder | null) {
+	try {
+		if (!rec) return;
+		// desliga TODAS as tracks (áudio/vídeo) do stream
+		rec.stream.getTracks().forEach((t) => t.stop());
+	} finally {
+		// solta a referência para GC
+		if (rec) rec = null;
+	}
+}
