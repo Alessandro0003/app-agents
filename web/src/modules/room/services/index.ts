@@ -26,10 +26,12 @@ export const createRoom = async (
 export const getRoomQuestions = async (
 	args: GetRoomQuestions.Args,
 ): Promise<GetRoomQuestions.Response> => {
-	const { roomId } = args;
+	const { roomId, limit } = args;
 
 	return await api
-		.get(`/rooms/${roomId}/questions`)
+		.get(`/rooms/${roomId}/questions`, {
+			params: { limit },
+		})
 		.then((res) => res.data.data);
 };
 

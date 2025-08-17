@@ -23,13 +23,15 @@ import { useGetRoom, useGetRoomQuestions } from "@/modules/room/hooks/queries";
 import { Button } from "../ui/button";
 
 export function AppSidebar() {
-	const { state } = useSidebar(); // "expanded" | "collapsed" | "icon"
+	const { state } = useSidebar();
 
 	const { data: rooms, isLoading } = useGetRoom({});
-	const room = rooms?.find((r) => r.id);
 
-	const { data: questions } = useGetRoomQuestions({ roomId: room?.id });
 	const [openRoomId, setOpenRoomId] = React.useState<string | null>(null);
+
+	const { data: questions = [], isFetching: loadingOpen } = useGetRoomQuestions(
+		{ roomId: openRoomId ?? undefined, limit: 5 },
+	);
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -90,10 +92,9 @@ export function AppSidebar() {
 													<MessageCircleQuestion className="h-4 w-4" />
 													<span className="truncate">{room.name}</span>
 												</div>
-
 												<div className="ml-2 flex items-center gap-2">
 													<span className="rounded-full bg-muted px-2 py-0.5 text-xs">
-														{room.questionsCount}
+														{room.questionsCount ?? 0}
 													</span>
 													<ChevronRight
 														className={`h-4 w-4 transition-transform ${isOpen ? "rotate-90" : ""}`}
@@ -104,11 +105,14 @@ export function AppSidebar() {
 
 										{isOpen && (
 											<ul className="mb-2 ml-8 space-y-1">
-												{questions?.map((q) => (
-													<li key={q.id} className="w-full">
+												{loadingOpen && (
+													<li className="h-4 w-28 animate-pulse rounded bg-muted" />
+												)}
+												{questions.map((q) => (
+													<li key={q.id}>
 														<Button
-															className="w-full text-left text-sm text-muted-foreground hover:foreground"
 															variant="ghost"
+															className="w-full justify-start text-left text-sm text-muted-foreground hover:text-foreground"
 															onClick={() =>
 																navigate(`/room/${room.id}#q-${q.id}`)
 															}
@@ -120,7 +124,6 @@ export function AppSidebar() {
 														</Button>
 													</li>
 												))}
-
 												{showMore && (
 													<li>
 														<NavLink

@@ -21,6 +21,7 @@ export namespace CreateRoom {
 export namespace GetRoomQuestions {
 	export type Args = {
 		roomId: Question["roomId"];
+		limit?: number;
 	};
 
 	export type Response = {
