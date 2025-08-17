@@ -1,6 +1,7 @@
 export namespace GetRoomQuestion {
 	export type Args = {
 		roomId: string;
+		limit?: number;
 	};
 }
 

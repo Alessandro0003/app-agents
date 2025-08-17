@@ -40,7 +40,7 @@ export const createRoom = async (args: CreateRoom.Args) => {
 };
 
 export const getRoomQuestion = async (args: GetRoomQuestion.Args) => {
-	const { roomId } = args;
+	const { roomId, limit } = args;
 
 	const result = await db
 		.select({
@@ -51,7 +51,8 @@ export const getRoomQuestion = async (args: GetRoomQuestion.Args) => {
 		})
 		.from(schema.questions)
 		.where(eq(schema.questions.roomId, roomId))
-		.orderBy(desc(schema.questions.createdAt));
+		.orderBy(desc(schema.questions.createdAt))
+		.limit(limit ?? 10);
 
 	return result;
 };

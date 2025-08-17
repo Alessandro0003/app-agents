@@ -47,9 +47,12 @@ export const getRoomQuestion = async (
 	request: GetRoomQuestionRequest,
 	reply: FastifyReply,
 ) => {
+	// @ts-ignore
 	const { roomId } = request.params;
+	// @ts-ignore
+	const { limit } = request.query;
 
-	const result = await services.getRoomQuestion({ roomId });
+	const result = await services.getRoomQuestion({ roomId, limit });
 
 	return reply.status(200).send({
 		statusCode: 200,

@@ -11,7 +11,10 @@ export type CreateRoomRequest = FastifyRequest<{
 }>;
 
 export type GetRoomQuestionRequest = FastifyRequest<{
+	//@ts-ignore
 	Params: z.infer<typeof schemas.getRoomQuestionSchema>["params"];
+	//@ts-ignore
+	Querystring: z.infer<typeof schemas.getRoomQuestionSchema>["querystring"];
 }>;
 
 export type CreateRoomQuestionRequest = FastifyRequest<{

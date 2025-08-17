@@ -29,9 +29,9 @@ export const createRoom = async (args: CreateRoom.Args) => {
 };
 
 export const getRoomQuestion = async (args: GetRoomQuestion.Args) => {
-	const { roomId } = args;
+	const { roomId, limit } = args;
 
-	const result = await repository.getRoomQuestion({ roomId });
+	const result = await repository.getRoomQuestion({ roomId, limit });
 
 	if (!result) {
 		throw new Error("Room not found");

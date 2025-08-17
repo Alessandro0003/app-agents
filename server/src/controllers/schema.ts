@@ -9,11 +9,15 @@ export const createRoomSchema = z.object({
 	}),
 });
 
-export const getRoomQuestionSchema = z.object({
+export const getRoomQuestionSchema = {
 	params: z.object({
 		roomId: z.string().uuid(),
 	}),
-});
+	querystring: z.object({
+		// query SEMPRE é string → faça coerce
+		limit: z.coerce.number().int().min(1).max(100).optional(),
+	}),
+} as const;
 
 export const createQuestionsSchema = z.object({
 	params: z.object({
