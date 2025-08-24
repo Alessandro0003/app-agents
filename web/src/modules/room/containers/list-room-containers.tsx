@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { dayjs } from "@/lib/dayjs";
 import { useGetRoom } from "../hooks/queries";
+import { DeleteRoomContainers } from "./delete-room-containers";
 
 export const ListRoomContaiers = () => {
 	const { data: rooms, isLoading } = useGetRoom({});
@@ -31,29 +32,44 @@ export const ListRoomContaiers = () => {
 			<CardContent className="flex flex-col gap-3">
 				{rooms?.map((room) => {
 					return (
-						<Link
-							className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent/50"
-							key={room.id}
-							to={`/room/${room.id}`}
-						>
-							<div className="flex-1 felx-col gap-1">
-								<h3 className="font-medium">{room.name}</h3>
+						<>
+							<div className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent/50" key={room.id}>
+								<div className="flex-1 felx-col gap-1">
+									<h3 className="font-medium">{room.name}</h3>
 
-								<div className="flex items-center gap-2">
-									<Badge variant="secondary" className="text-xs">
-										{dayjs(room.createdAt).toNow()}
-									</Badge>
-									<Badge variant="secondary" className="text-xs">
-										{room.questionsCount} pergunta(s)
-									</Badge>
+									<div className="flex items-center gap-2">
+										<Badge variant="secondary" className="text-xs">
+											{dayjs(room.createdAt).toNow()}
+										</Badge>
+										<Badge variant="secondary" className="text-xs">
+											{room.questionsCount} pergunta(s)
+										</Badge>
+									</div>
+								</div>
+
+								<div className="flex items-center gap-4">
+									<Link
+										
+										to={`/room/${room.id}`}
+									>
+										<span className="flex items-center gap-1 text-sm">
+											Entrar
+											<ArrowRight className="size-3" />
+										</span>
+									</Link>
+									<DeleteRoomContainers 
+										roomId={room.id}
+										reenderTrigger={(onOpen) => (
+											<Trash
+												className="size-4 text-destructive-foreground cursor-pointer hover:text-destructive transition-colors"
+												onClick={onOpen}
+											/>
+										)}
+									/>
 								</div>
 							</div>
-
-							<span className="flex items-center gap-1 text-sm">
-								Entrar
-								<ArrowRight className="size-3" />
-							</span>
-						</Link>
+						</>
+						
 					);
 				})}
 			</CardContent>

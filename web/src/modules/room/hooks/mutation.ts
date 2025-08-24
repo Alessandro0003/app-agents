@@ -4,6 +4,7 @@ import {
 	createRoom,
 	createRoomQuestion,
 	deleteQuestion,
+	deleteRoom,
 } from "../services";
 
 export const useCreateRoom = createMutation({
@@ -49,3 +50,14 @@ export const useDeleteQuestion = createMutation({
 	},
 	invalidate: [{ queryKey: ["get-questions"] }],
 });
+
+export const useDeleteRoom = createMutation({
+	key: ["delete-room"],
+	mutationFn: deleteRoom,
+	messages: {
+		onError: () => "Erro ao excluir sala",
+		onMutate: () => "Excluindo sala...",
+		onSuccess: () => "Sala excluída com sucesso",
+	},
+	invalidate: [{ queryKey: ["get-room"] }],
+})

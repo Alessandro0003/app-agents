@@ -7,6 +7,7 @@ import type {
 	DeleteQuestion,
 	GetRoom,
 	GetRoomQuestions,
+	DeleteRoom
 } from "./types";
 
 export const getRoom = async (): Promise<GetRoom.Response> => {
@@ -68,3 +69,11 @@ export const deleteQuestion = async (args: DeleteQuestion.Args) => {
 		.delete(`/rooms/questions/${questionId}`)
 		.then((res) => res.data.data);
 };
+
+export const deleteRoom = async (args: DeleteRoom.Args) => {
+	const { roomId } = args;
+
+	return await api
+		.delete(`/rooms/${roomId}`)
+		.then((res) => res.data.data);
+}

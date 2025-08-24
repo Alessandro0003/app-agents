@@ -60,3 +60,9 @@ export namespace DeleteQuestion {
 		questionId: Question["id"];
 	};
 }
+
+export namespace DeleteRoom {
+	export type Args = {
+		roomId: Room["id"];
+	};
+}
