@@ -1,4 +1,5 @@
 import * as repository from "../../repository/rooms/index.ts";
+import * as repositoryQuestions from "../../repository/questions/index.ts";
 import type {
 	CreateRoom,
 	CreateRoomQuestion,
@@ -31,19 +32,19 @@ export const createRoom = async (args: CreateRoom.Args) => {
 export const getRoomQuestion = async (args: GetRoomQuestion.Args) => {
 	const { roomId, limit } = args;
 
-	const result = await repository.getRoomQuestion({ roomId, limit });
+	const questions = await repositoryQuestions.getQuestions({ roomId, limit });
 
-	if (!result) {
-		throw new Error("Room not found");
+	if (!questions) {
+		throw new Error("Questoins not found in this room");
 	}
 
-	return result;
+	return questions;
 };
 
 export const createRoomQuestion = async (args: CreateRoomQuestion.Args) => {
 	const { roomId, question, answer } = args;
 
-	const result = await repository.createQuestion({ roomId, question, answer });
+	const result = await repositoryQuestions.createQuestion({ roomId, question, answer });
 
 	const insertedQuestion = result[0];
 
@@ -56,7 +57,7 @@ export const createRoomQuestion = async (args: CreateRoomQuestion.Args) => {
 export const deleteQuestion = async (args: DeleteQuestion.Args) => {
 	const { questionId } = args;
 
-	const question = await repository.deleteQuestion({ id: questionId });
+	const question = await repositoryQuestions.deleteQuestion({ id: questionId });
 
 	if (question.length === 0) {
 		throw new Error("Question not exists");
