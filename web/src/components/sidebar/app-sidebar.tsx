@@ -17,7 +17,7 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 	SidebarTrigger,
-	useSidebar, // 👈 importar o hook
+	useSidebar
 } from "@/components/ui/sidebar";
 import { useGetRoom, useGetRoomQuestions } from "@/modules/room/hooks/queries";
 import { Button } from "../ui/button";
@@ -31,6 +31,10 @@ export function AppSidebar() {
 
 	const { data: questions = [], isFetching: loadingOpen } = useGetRoomQuestions(
 		{ roomId: openRoomId ?? undefined, limit: 5 },
+		{
+			enabled: !!openRoomId,
+			queryKey: ["get-questions", openRoomId],
+		}
 	);
 	const location = useLocation();
 	const navigate = useNavigate();
