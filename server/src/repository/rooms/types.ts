@@ -1,45 +1,6 @@
-export namespace GetRoomQuestion {
-	export type Args = {
-		roomId: string;
-		limit?: number;
-	};
-}
-
 export namespace CreateRoom {
 	export type Args = {
 		name: string;
 		description: string;
-	};
-}
-
-export namespace CreateRoomQuestion {
-	export type Args = {
-		roomId: string;
-		question: string;
-		answer?: string;
-	};
-}
-
-export namespace AudioChunks {
-	export type Args = {
-		roomId: string;
-		transcription: string;
-		embeddings: number[];
-	};
-}
-
-export namespace GetByQuestionId {
-	export type Args = {
-		id: string;
-	};
-
-	export type Response = {
-		id: string;
-	};
-}
-
-export namespace DeleteRoom {
-	export type Args = {
-		id: string;
 	};
 }
