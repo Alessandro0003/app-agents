@@ -20,80 +20,143 @@ export const getRooms = async (
 	_request: GetRoomsRequest,
 	reply: FastifyReply,
 ) => {
-	const result = await services.getRooms();
+	try {
+		const result = await services.getRooms();
 
-	return reply.status(200).send({
-		statusCode: 200,
-		message: "Rooms retrieved successfully",
-		data: result,
-	});
+		return reply.status(200).send({
+			statusCode: 200,
+			message: "Rooms retrieved successfully",
+			data: result,
+		});
+
+	} catch (error) {
+		let message: string = "Error retrieving rooms";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
+	}
 };
 
 export const createRoom = async (
 	request: CreateRoomRequest,
 	reply: FastifyReply,
 ) => {
-	const { name, description } = request.body;
+	try {
+		const { 
+			body: { name, description } 
+		} = request;
 
-	const result = await services.createRoom({ name, description });
+		const result = await services.createRoom({ name, description });
 
-	return reply.status(201).send({
-		statusCode: 201,
-		message: "Room created successfully",
-		data: result,
-	});
+		return reply.status(201).send({
+			statusCode: 201,
+			message: "Room created successfully",
+			data: result,
+		});
+
+	} catch (error) {
+		let message: string = "Error creating room";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
+	}
 };
 
 export const getRoomQuestion = async (
 	request: GetRoomQuestionRequest,
 	reply: FastifyReply,
 ) => {
-	// @ts-ignore
-	const { roomId } = request.params;
-	// @ts-ignore
-	const { limit } = request.query;
+	try {
+		
+		const { 
+			// @ts-ignore
+			params: { roomId },
+			// @ts-ignore
+			query: { limit },
+		} = request;
+		
+		const result = await services.getRoomQuestion({ roomId, limit });
 
-	const result = await services.getRoomQuestion({ roomId, limit });
+		return reply.status(200).send({
+			statusCode: 200,
+			message: "Questions retrieved successfully",
+			data: result,
+		});
 
-	return reply.status(200).send({
-		statusCode: 200,
-		message: "Questions retrieved successfully",
-		data: result,
-	});
+	} catch (error) {
+		let message: string = "Error retrieving room questions";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
+	}
 };
 
 export const createRoomQuestion = async (
 	request: CreateRoomQuestionRequest,
 	reply: FastifyReply,
 ) => {
-	const { roomId } = request.params;
-	const { question } = request.body;
+	try {
+		const {
+			body: { question },
+			params: { roomId },
+		} = request;
 
-	const embeddings = await generateEmbeddings(question);
+		const embeddings = await generateEmbeddings(question);
 
-	const chunks = await audioChunksServices.getAudioChunks({
-		embeddings,
-	});
+		const chunks = await audioChunksServices.getAudioChunks({
+			embeddings,
+		});
 
-	let answer: string | undefined;
+		let answer: string | undefined;
 
-	if (chunks.length > 0) {
-		const transcriptions = chunks.map((chunk) => chunk.transcription);
+		if (chunks.length > 0) {
+			const transcriptions = chunks.map((chunk) => chunk.transcription);
 
-		answer = await generateAnswer(question, transcriptions);
+			answer = await generateAnswer(question, transcriptions);
+		}
+
+		const result = await services.createRoomQuestion({
+			roomId,
+			question,
+			answer,
+		});
+
+		return reply.status(201).send({
+			statusCode: 201,
+			message: "Question created successfully",
+			data: result,
+		});
+
+	} catch (error) {
+		let message: string = "Error creating room question";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
 	}
-
-	const result = await services.createRoomQuestion({
-		roomId,
-		question,
-		answer,
-	});
-
-	return reply.status(201).send({
-		statusCode: 201,
-		message: "Question created successfully",
-		data: result,
-	});
 };
 
 export const uploadAudio = async (
