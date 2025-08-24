@@ -1,4 +1,4 @@
-import { count, desc, eq } from "drizzle-orm";
+import { count,eq } from "drizzle-orm";
 import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
 import type {

@@ -17,7 +17,7 @@ export namespace CreateQuestion {
 		roomId: string;
 		question: string;
 		answer?: string;
-	};
+	}
 }
 
 export namespace GetByQuestionId {

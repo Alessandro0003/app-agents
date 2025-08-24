@@ -1,7 +1,7 @@
 import { db } from "../../db/connection.ts";
-import { count, desc, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { schema } from "../../db/schemas/index.ts";
-import { GetQuestions, CreateQuestion, GetByQuestionId, DeleteQuestion } from './types.ts'
+import type { GetQuestions, CreateQuestion, GetByQuestionId, DeleteQuestion } from './types.ts'
 
 export const getQuestions = async (args: GetQuestions.Args): Promise<GetQuestions.Response> => {
     const { roomId, limit } = args;
