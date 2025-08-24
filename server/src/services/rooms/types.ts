@@ -25,3 +25,9 @@ export namespace DeleteQuestion {
 		questionId: string;
 	};
 }
+
+export namespace DeleteRoom {
+	export type Args = {
+		roomId: string;
+	};
+}

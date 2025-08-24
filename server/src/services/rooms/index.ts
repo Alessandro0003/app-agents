@@ -5,6 +5,7 @@ import type {
 	CreateRoomQuestion,
 	DeleteQuestion,
 	GetRoomQuestion,
+	DeleteRoom
 } from "./types.ts";
 
 export const getRooms = async () => {
@@ -65,3 +66,11 @@ export const deleteQuestion = async (args: DeleteQuestion.Args) => {
 
 	return question;
 };
+
+export const deleteRoom = async (args: DeleteRoom.Args) => {
+	const { roomId } = args;
+	
+	const room = await repository.deleteRoom({ roomId });
+
+	return room;
+}
