@@ -29,3 +29,7 @@ export type UploadAudioRequest = FastifyRequest<{
 export type DeleteQuestionRequest = FastifyRequest<{
 	Params: z.infer<typeof schemas.deleteQuestionSchema>["params"];
 }>;
+
+export type DeleteRoomRequest = FastifyRequest<{
+	Params: z.infer<typeof schemas.deleteRoomSchema>["params"];
+}>

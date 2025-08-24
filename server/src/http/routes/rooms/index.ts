@@ -8,6 +8,7 @@ import {
 	getRoomQuestionSchema,
 	getRoomsSchema,
 	uploadAudioSchema,
+	deleteRoomSchema,
 } from "../../../controllers/schema.ts";
 
 export const roomsRoute: FastifyPluginAsync = async (app) => {
@@ -40,4 +41,10 @@ export const roomsRoute: FastifyPluginAsync = async (app) => {
 		{ schema: deleteQuestionSchema },
 		controllers.deleteQuestion,
 	);
+
+	route.delete(
+		"/rooms/:roomId",
+		{ schema: deleteRoomSchema },
+		controllers.deleteRoom,
+	)
 };

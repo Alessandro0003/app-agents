@@ -10,6 +10,7 @@ import type {
 	CreateRoomQuestionRequest,
 	CreateRoomRequest,
 	DeleteQuestionRequest,
+	DeleteRoomRequest,
 	GetRoomQuestionRequest,
 	GetRoomsRequest,
 	UploadAudioRequest,
@@ -166,3 +167,40 @@ export const deleteQuestion = async (
 		});
 	}
 };
+
+export const deleteRoom = async (
+	request: DeleteRoomRequest,
+	reply: FastifyReply,
+) => {
+	try {
+		const { 
+			params: { roomId },
+		} = request;
+
+		const room = await services.deleteRoom({ roomId });
+
+		if (!room) {
+			return reply.status(404).send({
+				statusCode: 404,
+				message: "Room not found",
+			});
+		}
+
+		return reply.status(200).send({
+			statusCode: 200,
+			message: "Room deleted successfully",
+		});
+
+	} catch (error) {
+		let message: string = "Error deleting room";
+
+		if (error instanceof Error) {
+			message = error.message;
+		}
+
+		return reply.status(500).send({
+			statusCode: 500,
+			message,
+		});
+	}
+}

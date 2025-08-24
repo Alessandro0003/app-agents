@@ -37,3 +37,9 @@ export const deleteQuestionSchema = z.object({
 		questionId: z.string().uuid(),
 	}),
 });
+
+export const deleteRoomSchema = z.object({
+	params: z.object({
+		roomId: z.string().uuid(),
+	}),
+})
