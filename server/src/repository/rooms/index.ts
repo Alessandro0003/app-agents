@@ -3,6 +3,7 @@ import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
 import type {
 	CreateRoom,
+	DeleteRoom
 } from "./types.ts";
 
 export const getRooms = async () => {
@@ -34,3 +35,14 @@ export const createRoom = async (args: CreateRoom.Args) => {
 
 	return result;
 };
+
+export const deleteRoom = async (args: DeleteRoom.Args) => {
+	const { roomId } = args;
+
+	const room = await db
+		.delete(schema.rooms)
+		.where(eq(schema.rooms.id, roomId))
+		.returning();
+
+	return room;
+}

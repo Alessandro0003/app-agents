@@ -4,3 +4,9 @@ export namespace CreateRoom {
 		description: string;
 	};
 }
+
+export namespace DeleteRoom {
+	export type Args = {
+		roomId: string;
+	};
+}
